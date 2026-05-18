@@ -141,8 +141,8 @@ server:
 
 database:
   host: localhost
-  user: gmoore
-  password: maggie2pie
+  user: ${USER}
+  password: ${PASSWORD}
   database: gbfpd
 
 ollama:
