@@ -1,0 +1,50 @@
+{
+  "models": [
+    {
+      "title": "Mistral Local (Ollama)",
+      "provider": "ollama",
+      "model": "mistral",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 4096,
+      "maxTokens": 1024,
+      "temperature": 0.5
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Mistral Local (Ollama)",
+    "provider": "ollama",
+    "model": "mistral",
+    "apiBase": "http://localhost:11434",
+    "contextLength": 2048,
+    "maxTokens": 512,
+    "temperature": 0.3
+  },
+  "slashCommands": [
+    {
+      "name": "edit",
+      "description": "Edit code - asks Claude for edits to the selected code"
+    },
+    {
+      "name": "comment",
+      "description": "Add a comment - asks Claude to explain the selected code"
+    },
+    {
+      "name": "doc",
+      "description": "Generate documentation - creates JSDoc/Go doc comments"
+    },
+    {
+      "name": "explain",
+      "description": "Explain code - provides detailed explanation"
+    }
+  ],
+  "customCommands": [
+    {
+      "name": "test",
+      "prompt": "Write unit tests for the selected code following Go testing conventions"
+    },
+    {
+      "name": "refactor",
+      "prompt": "Refactor the selected code to improve readability and performance while maintaining functionality"
+    }
+  ]
+}

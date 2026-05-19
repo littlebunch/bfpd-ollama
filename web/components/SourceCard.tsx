@@ -42,7 +42,7 @@ export function SourceCard({ source, index }: SourceCardProps) {
       {expanded && (
         <div className="border-t border-slate-700 px-3 py-2 text-slate-400 leading-relaxed">
           {source.content}
-          {Object.keys(source.metadata).length > 0 && (
+          {source.metadata && Object.keys(source.metadata).length > 0 && (
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-slate-500">
               {Object.entries(source.metadata).map(([k, v]) => (
                 <span key={k}>

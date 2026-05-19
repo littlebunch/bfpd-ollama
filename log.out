@@ -1,0 +1,48 @@
+[0;34mStarting USDA FoodData Central Normalized Database Import...[0m
+[0;32m✓ Schema created successfully[0m
+[1;33m⚠ File not found: /Users/gmoore/bfpd/2025-12/FoodData_Central_branded_food_csv_2025-12-18/nutrient_source.csv[0m
+[1;33mImporting food_nutrient_derivation.csv into nutrient_derivations...[0m
+[0;32m✓ Imported nutrient_derivations[0m
+[1;33mImporting measure_unit.csv into measure_units...[0m
+[0;32m✓ Imported measure_units[0m
+[1;33mImporting nutrient.csv into nutrients...[0m
+[0;32m✓ Imported nutrients[0m
+[1;33mImporting food_attribute_type.csv into food_attribute_types...[0m
+[0;32m✓ Imported food_attribute_types[0m
+[1;33mImporting food.csv into foods...[0m
+[0;32m✓ Imported foods[0m
+[1;33mImporting branded_food.csv into branded_foods...[0m
+[0;32m✓ Imported branded_foods[0m
+[1;33mImporting food_nutrient.csv into food_nutrients...[0m
+[0;32m✓ Imported food_nutrients[0m
+[1;33mImporting food_attribute.csv into food_attributes...[0m
+[0;32m✓ Imported food_attributes[0m
+[1;33mImporting microbe.csv into microbes...[0m
+[0;32m✓ Imported microbes[0m
+[1;33mImporting food_update_log_entry.csv into food_update_log_entries...[0m
+[0;32m✓ Imported food_update_log_entries[0m
+[0;32m✓ Views created successfully[0m
+import_summary
+Total Foods Imported: 1993975
+category	count
+Branded Foods:	0
+Nutrients:	0
+Food-Nutrient Relationships:	0
+Food Attributes:	0
+Microbe Records:	0
+
+[0;32m✓ Import completed successfully![0m
+[0;34mDatabase: gbfpd[0m
+
+Useful queries:
+  # Count by data:
+  mysql -u gmoore gbfpd -e 'SELECT COUNT(*) FROM branded_foods;'
+
+  # View schema:
+  mysql -u gmoore gbfpd -e 'SHOW TABLES;'
+
+  # Query branded foods with nutrients:
+  mysql -u gmoore gbfpd -e 'SELECT * FROM vw_branded_food_nutrients LIMIT 10;'
+
+  # Query macronutrients:
+  mysql -u gmoore gbfpd -e 'SELECT * FROM vw_branded_food_macros LIMIT 10;'

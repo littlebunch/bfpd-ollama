@@ -1,0 +1,30 @@
+server:
+  host: localhost
+  port: 8080
+  mode: debug
+
+database:
+  host: localhost
+  port: 3306
+  user: gmoore
+  password: maggie2pie
+  database: gbfpd
+  maxconns: 32
+
+ollama:
+  url: http://localhost:11434
+  model: neural-chat
+  embedding_model: nomic-embed-text
+  timeout: 120
+  context_window: 4096
+
+vectordb:
+  url: http://localhost:6333
+  collection_name: food_vectors
+  vector_size: 768
+
+rag:
+  topk: 5
+  score_threshold: 0.5
+  chunk_size: 512
+  chunk_overlap: 128
