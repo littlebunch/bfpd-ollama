@@ -25,6 +25,7 @@ func main() {
 		qdrantURL    = flag.String("qdrant-url", "http://localhost:6333", "Qdrant URL")
 		chunkSize    = flag.Int("chunk-size", 512, "Chunk size in tokens")
 		chunkOverlap = flag.Int("chunk-overlap", 128, "Chunk overlap in tokens")
+		limit        = flag.Int("limit", 1000, "Max number of food records to seed (0 = no limit)")
 	)
 	flag.Parse()
 
@@ -72,7 +73,7 @@ func main() {
 
 	// Load and process food data
 	log.Println("\nLoading food data from MySQL...")
-	foodDocs, err := loadFoodDocuments(db, *chunkSize, *chunkOverlap)
+	foodDocs, err := loadFoodDocuments(db, *chunkSize, *chunkOverlap, *limit)
 	if err != nil {
 		log.Fatalf("Failed to load food documents: %v", err)
 	}
@@ -114,12 +115,19 @@ func main() {
 	log.Println("\n✓ Vector database seeding complete!")
 }
 
-func loadFoodDocuments(db *sql.DB, chunkSize, chunkOverlap int) ([]models.FoodDocument, error) {
+func loadFoodDocuments(db *sql.DB, chunkSize, chunkOverlap, limit int) ([]models.FoodDocument, error) {
 	var docs []models.FoodDocument
 	chunker := embedding.NewChunker(chunkSize, chunkOverlap)
 
+	limitClause := "LIMIT 1000"
+	if limit == 0 {
+		limitClause = ""
+	} else {
+		limitClause = fmt.Sprintf("LIMIT %d", limit)
+	}
+
 	// Query branded foods with nutrients
-	query := `
+	query := fmt.Sprintf(`
 		SELECT 
 			bf.fdc_id,
 			bf.gtin_upc,
@@ -135,8 +143,8 @@ func loadFoodDocuments(db *sql.DB, chunkSize, chunkOverlap int) ([]models.FoodDo
 		LEFT JOIN food_nutrients fn ON bf.fdc_id = fn.fdc_id
 		LEFT JOIN nutrients n ON fn.nutrient_id = n.id
 		GROUP BY bf.fdc_id
-		LIMIT 1000
-	`
+		%s
+	`, limitClause)
 
 	rows, err := db.Query(query)
 	if err != nil {
