@@ -7,7 +7,7 @@ A Go-based application for querying food nutrition data using local LLMs (Ollama
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Chat Interfaces                       │
-│              (CLI or REST API)                          │
+│          (CLI, REST API, or Next.js Web UI)             │
 └────────────┬────────────────────────────────────────────┘
              │
 ┌────────────▼─────────────────────────────────────────────┐
@@ -47,6 +47,11 @@ A Go-based application for querying food nutrition data using local LLMs (Ollama
 ├── pkg/
 │   ├── models/           # Data structures
 │   └── config/           # Configuration
+├── web/                  # Next.js web frontend
+│   ├── app/              # App Router pages & layout
+│   ├── components/       # React components
+│   ├── lib/              # TypeScript types & API client
+│   └── next.config.js    # Proxies /api/* → localhost:8080
 ├── config.yaml           # Configuration file
 ├── docker-compose.yml    # Ollama + Qdrant services
 ├── Makefile             # Build targets
@@ -108,6 +113,25 @@ Assistant: Based on the food database, Coca-Cola contains...
     Title: Coca-Cola Classic
     Calories: 140 kcal, Carbs: 39g, ...
 ```
+
+### Web UI
+
+```bash
+# Start the Go API server first (port 8080)
+make run-api
+
+# In a separate terminal, start the Next.js frontend (port 3000)
+make run-web
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+**Features:**
+- 💬 Conversational chat interface
+- 🔍 RAG toggle — enable/disable food database search per message
+- 📚 Source citations displayed below assistant responses (click to expand)
+- 🟢 Live backend health indicator
+- ✨ Suggested prompts on an empty chat
 
 ### REST API
 
@@ -261,7 +285,7 @@ make seed-vectors
 
 ## Next Steps
 
-1. Implement web UI with Next.js frontend
+1. ~~Implement web UI with Next.js frontend~~ ✅
 2. Add streaming responses for better UX
 3. Implement persistent conversation storage
 4. Add fine-tuning pipeline for domain-specific LLM

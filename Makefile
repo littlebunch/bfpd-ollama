@@ -1,10 +1,14 @@
-.PHONY: help build run-api run-cli seed-vectors install-models deps test clean docker-up docker-down
+.PHONY: help build run-api run-cli seed-vectors install-models deps test clean docker-up docker-down \
+        run-web build-web install-web-deps
 
 help:
 	@echo "Available targets:"
 	@echo "  build             - Build all binaries"
 	@echo "  run-api           - Run API server"
 	@echo "  run-cli           - Run CLI chat client"
+	@echo "  run-web           - Run Next.js web UI (dev mode, port 3000)"
+	@echo "  build-web         - Build Next.js web UI for production"
+	@echo "  install-web-deps  - Install Node.js dependencies for web UI"
 	@echo "  seed-vectors      - Seed vector database from MySQL"
 	@echo "  install-models    - Pull LLM models from Ollama"
 	@echo "  deps              - Install Go dependencies"
@@ -12,6 +16,15 @@ help:
 	@echo "  docker-down       - Stop Docker services"
 	@echo "  test              - Run tests"
 	@echo "  clean             - Remove binaries"
+
+install-web-deps:
+	cd web && npm install
+
+run-web: install-web-deps
+	cd web && npm run dev
+
+build-web: install-web-deps
+	cd web && npm run build
 
 build: build-api build-cli build-seed
 
